@@ -1,0 +1,105 @@
+-- Criação de tabelas
+CREATE TABLE empresas (
+  idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
+  razaoSocial VARCHAR(45) ,
+  cnpj CHAR(14),
+  telefone VARCHAR(15),
+  logradouro VARCHAR(45),
+  numero int,
+  bairro VARCHAR(45),
+  complemento VARCHAR(45),
+  cidade VARCHAR(45),
+  estado VARCHAR(45),
+  cep VARCHAR(9) 
+);
+
+CREATE TABLE usuarios (
+  idUsuario INT PRIMARY KEY AUTO_INCREMENT,
+  nome VARCHAR(45) ,
+  sobrenome VARCHAR(45),
+  email VARCHAR(45),
+  senha VARCHAR(45),
+  telefone VARCHAR(15),
+  cpf CHAR(11) 
+);
+
+CREATE TABLE permissoes (
+  idPermissao INT PRIMARY KEY AUTO_INCREMENT,
+  tipoUsuario VARCHAR(45) ,
+  adm TINYINT,
+  cluster TINYINT
+);
+  
+CREATE TABLE clusters (
+  idCluster INT PRIMARY KEY AUTO_INCREMENT,
+  nome VARCHAR(45)
+);
+
+CREATE TABLE maquinas (
+  idMaquina INT PRIMARY KEY AUTO_INCREMENT,
+  memRamTotal DOUBLE,
+  discTotal DOUBLE,
+  cpuTotal DOUBLE,
+  rede CHAR(15) 
+);
+
+--ON UPDATE CASCADE ON DELETE CASCADE para garantir que as alterações na chave primária da tabela maquinas sejam propagadas automaticamente para a tabela metricas
+CREATE TABLE metricas (
+  idMetrica INT PRIMARY KEY AUTO_INCREMENT,
+  metricaRam DOUBLE,
+  metricaDisc DOUBLE,
+  metricaCpu DOUBLE,
+  fkMaquina INT,
+  FOREIGN KEY (fkMaquina) REFERENCES maquinas(idMaquina) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE recursosUtilizados (
+  idRecursoUtilizado INT PRIMARY KEY AUTO_INCREMENT,
+  memRamEmUso VARCHAR(45),
+  discTotalEmUso VARCHAR(45),
+  cpuTotalEmUso VARCHAR(45),
+  temperaturaCpu DOUBLE,
+  horario DATETIME,
+  rede VARCHAR(45),
+  fkMaquina INT,
+  FOREIGN KEY (fkMaquina) REFERENCES maquinas(idMaquina) 
+);
+
+CREATE TABLE alertas (
+  idAlerta INT PRIMARY KEY AUTO_INCREMENT,
+  tipoAlerta VARCHAR(45),
+  horario DATETIME,
+  status VARCHAR(45) 
+);
+
+-- Alterando colunas com a foreign key
+ALTER TABLE usuarios
+ADD COLUMN fkEmpresa INT,
+ADD CONSTRAINT fkEmpresa
+FOREIGN KEY (fkEmpresa) REFERENCES empresas(idEmpresa);
+
+ALTER TABLE usuarios
+ADD COLUMN fkCluster INT,
+ADD CONSTRAINT fkCluster
+FOREIGN KEY (fkCluster) REFERENCES clusters(idCluster);
+
+ALTER TABLE usuarios
+ADD COLUMN fkPermissao INT,
+ADD CONSTRAINT fkPermissao
+FOREIGN KEY (fkPermissao) REFERENCES permissoes(idPermissao);
+
+ALTER TABLE clusters
+ADD COLUMN fkPermissao INT,
+ADD CONSTRAINT fkPermissao
+FOREIGN KEY (fkPermissao) REFERENCES permissoes(idPermissao);
+
+ALTER TABLE maquinas
+ADD COLUMN fkCluster INT,
+ADD CONSTRAINT fkCluster
+FOREIGN KEY (fkCluster) REFERENCES clusters(idCluster);
+
+ALTER TABLE alertas
+ADD COLUMN fkRecursoUtilizado INT,
+ADD CONSTRAINT fkRecursoUtilizado
+FOREIGN KEY (fkRecursoUtilizado) REFERENCES recursosUtilizados(idRecursoUtilizado);
+
