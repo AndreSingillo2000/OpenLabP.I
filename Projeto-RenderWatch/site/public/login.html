@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - RenderWatch</title>    
+    <link rel="icon" type="image/x-icon" href="./assets/style-all/icone_topo_colorido.png"/>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+    <link rel="stylesheet" href="css/login.css">
+    <script src="js/script_login.js"></script>
+</head>
+
+<body>
+    <main>
+
+        <div class="btnBack">
+            <img src="assets/login/arrowBack.svg" onclick="history.back()" />
+        </div>
+
+        <div class="caixa_login">
+
+            <img src="./assets/login/renderwatch_logo_colorido.png" title="teste@teste.com | 123" class="renderwatch-logo" width="200px">
+            <div class="div_bem_vindo"> Bem vindo</div>
+            <label for="input_email" class="div_Input"><input id="input_email" type="text" placeholder="Email" id="input_email" onfocus="Focus(input_email, alerta_email)" onkeyup="keyUp(event, input_email, alerta_email)"></label>
+            <span class="alerta" id="alerta_email"></span>
+            <label for="input_senha" class="div_Input"><input id="input_senha" type="password" placeholder="Senha"id="input_senha" onfocus="Focus(input_senha, alerta_senha)" onkeyup="keyUp(event, input_senha, alerta_senha)">   
+                <img src="assets/login/olho_fechado.png.png" class="input_revelar_senha" onclick="revelar_senha()" id="imagem_revelar_senha"></label>  
+            <span class="alerta" id="alerta_senha"></span>
+
+            <button onclick="login()">Entrar</button>
+            <div class="div_cadastre">Não tem login? <a href="cadastro.html">Cadastre-se aqui!</a></div>
+            <!-- <img class="div_img" src="./assets/login/Logo_Branco.png" alt=""> -->
+
+
+
+        </div>
+        <div class="arte_de_fundo">
+
+
+            <img class="retorno" src="assets/seta branca.png" alt="" href="">
+
+        </div>
+        <!-- <div class="linha_gradient"></div> -->
+
+    </main>
+
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+
+<script>
+      function revelar_senha() {
+        var senha = input_senha.value
+
+        if (input_senha.type == 'password') {
+            input_senha.type = 'text'
+            imagem_revelar_senha.src = "assets/login/olho.png.png";
+          
+        } else {
+            input_senha.type = 'password'
+            imagem_revelar_senha.src = "assets/login/olho_fechado.png.png";
+            
+        }
+
+
+    }
+</script>
